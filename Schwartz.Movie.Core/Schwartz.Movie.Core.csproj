@@ -5,13 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="..\ratings.json" Link="Files\ratings.json" />
+    <Content Include="..\ratings.test.json" Link="Files\ratings.test.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Schwartz.Movie.Core.Entities\Schwartz.Movie.Core.Entities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Files\ratings.min.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Files\" />
   </ItemGroup>
 
 </Project>
