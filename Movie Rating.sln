@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwartz.Movie.Test.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwartz.Movie.Test.Core.Entities", "Schwartz.Movie.Test.Core.Entities\Schwartz.Movie.Test.Core.Entities.csproj", "{A980A70E-26D3-4440-90AE-C5C2CD3AA24C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwartz.Movie.Test.Infrasctructure.Data", "Schwartz.Movie.Test.Infrasctructure.Data\Schwartz.Movie.Test.Infrasctructure.Data.csproj", "{B4F67915-D420-4BEB-9175-0B4ECED0E555}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwartz.Movie.Test.Infrastructure.Data", "Schwartz.Movie.Test.Infrasctructure.Data\Schwartz.Movie.Test.Infrastructure.Data.csproj", "{B4F67915-D420-4BEB-9175-0B4ECED0E555}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
