@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schwartz.Movie.Spike.Json",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwartz.Movie.Infrastructure.Data", "Schwartz.Movie.Infrastructure.Data\Schwartz.Movie.Infrastructure.Data.csproj", "{DA437FBE-E061-4CB9-8DEF-21CFA68AA3CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwartz.Movie.Test.Infrastructure.Data", "Schwartz.Movie.Test.Infrastructure.Data\Schwartz.Movie.Test.Infrastructure.Data.csproj", "{704649EB-0C2A-4D12-8A39-785F689A6EF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{DA437FBE-E061-4CB9-8DEF-21CFA68AA3CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA437FBE-E061-4CB9-8DEF-21CFA68AA3CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA437FBE-E061-4CB9-8DEF-21CFA68AA3CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{704649EB-0C2A-4D12-8A39-785F689A6EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{704649EB-0C2A-4D12-8A39-785F689A6EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{704649EB-0C2A-4D12-8A39-785F689A6EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{704649EB-0C2A-4D12-8A39-785F689A6EF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{A980A70E-26D3-4440-90AE-C5C2CD3AA24C} = {17C5A635-C2A0-42E3-B67D-3B6A2F78E321}
 		{28CD412C-1653-4666-802A-CBA5AD8D425B} = {E0334F25-D0A3-4AA8-85C7-D323260B6C1C}
 		{DA437FBE-E061-4CB9-8DEF-21CFA68AA3CA} = {29B6B80B-1230-4E53-A46F-DEE79A8870A5}
+		{704649EB-0C2A-4D12-8A39-785F689A6EF1} = {29B6B80B-1230-4E53-A46F-DEE79A8870A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AB23A3FA-BC27-4E7A-AAD4-C9D42BF6B96C}

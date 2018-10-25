@@ -8,4 +8,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Schwartz.Movie.Core.Entities\Schwartz.Movie.Core.Entities.csproj" />
+    <ProjectReference Include="..\Schwartz.Movie.Core\Schwartz.Movie.Core.csproj" />
+  </ItemGroup>
+
 </Project>
