@@ -8,4 +8,10 @@
     <ProjectReference Include="..\Schwartz.Movie.Core.Entities\Schwartz.Movie.Core.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Files\ratings.min.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
