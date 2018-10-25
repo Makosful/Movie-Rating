@@ -9,6 +9,42 @@ namespace Schwartz.Movie.Infrastructure.Data
 {
     public class JsonFileReader : IFileReader
     {
+        /// <summary>
+        /// Interface implementation
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public IEnumerable<Rating> ReadFile(string filePath)
+        {
+            var ratings = new List<Rating>();
+
+            using (var streamReader = new StreamReader(filePath))
+            using (var reader = new JsonTextReader(streamReader))
+            {
+                try
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.TokenType != JsonToken.StartObject) continue;
+                        var rating = CreateRating(reader);
+
+                        ratings.Add(rating);
+                    }
+                }
+                catch (JsonReaderException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+
+            return ratings;
+        }
+
+        /// <summary>
+        /// Creates a new Rating object from the JsonReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         private static Rating CreateRating(JsonReader reader)
         {
             var rating = new Rating();
@@ -39,32 +75,6 @@ namespace Schwartz.Movie.Infrastructure.Data
             }
 
             return rating;
-        }
-
-        public IEnumerable<Rating> ReadFile(string filePath)
-        {
-            var ratings = new List<Rating>();
-
-            using (var streamReader = new StreamReader(filePath))
-            using (var reader = new JsonTextReader(streamReader))
-            {
-                try
-                {
-                    while (reader.Read())
-                    {
-                        if (reader.TokenType != JsonToken.StartObject) continue;
-                        var rating = CreateRating(reader);
-
-                        ratings.Add(rating);
-                    }
-                }
-                catch (JsonReaderException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-
-            return ratings;
         }
     }
 }
