@@ -10,6 +10,7 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
             ReviewRepository = reviewRepository;
         }
 
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
         private IReviewRepository ReviewRepository { get; }
 
         public int GetAmountOfReviewsWithGradeByReviewer(int reviewerId, int grade)

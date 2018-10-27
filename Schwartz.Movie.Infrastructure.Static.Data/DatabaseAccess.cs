@@ -3,7 +3,7 @@ using Schwartz.Movie.Core.Entities;
 
 namespace Schwartz.Movie.Infrastructure.Static.Data
 {
-    public class DatabaseAccess
+    public static class DatabaseAccess
     {
         public static MovieRatingContext Context { get; } = new MovieRatingContext();
 
@@ -14,11 +14,6 @@ namespace Schwartz.Movie.Infrastructure.Static.Data
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
                 optionsBuilder.UseInMemoryDatabase("MovieRatingDatabase");
-            }
-
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                base.OnModelCreating(modelBuilder);
             }
         }
     }

@@ -8,7 +8,6 @@ namespace Schwartz.Movie.Test.Infrastructure.Data
     public class FileReaderTest
     {
         private const string PathTest = @"ratings.test.json";
-        private const string PathReal = @"ratings.json";
 
         [Fact]
         public void ReadFile_LoadsFileCorrectly_ExpectsSuccess()

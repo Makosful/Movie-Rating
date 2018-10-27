@@ -5,10 +5,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
+// ReSharper disable PossibleInvalidOperationException
+
 namespace Schwartz.Movie.Spike.Json
 {
     internal static class Program
     {
+        // ReSharper disable once UnusedParameter.Local
         private static void Main(string[] args)
         {
             ReadBrokenJson();

@@ -1,4 +1,6 @@
 using Moq;
+using Schwartz.Movie.Core.ApplicationServices;
+using Schwartz.Movie.Core.ApplicationServices.Implementations;
 using Schwartz.Movie.Core.DomainServices;
 using Schwartz.Movie.Core.Entities;
 using System;
@@ -10,6 +12,25 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
 {
     public class ReviewServiceTest
     {
+        /// <summary>
+        /// Creates a new Moq of the IReviewRepository, setting up expected returns on public calls
+        /// </summary>
+        /// <returns></returns>
+        private static Mock<IReviewRepository> CreateNewMoqRepository()
+        {
+            var repository = new Mock<IReviewRepository>();
+            repository.Setup(r => r.GetAllReviews())
+                .Returns(SampleRatings);
+            for (var i = 0; i < 9; i++)
+            {
+                var n = i + 1;
+                repository.Setup(r => r.GetReviewsByMovie(n)).Returns(SampleRatings().Where(f => f.Movie == n).ToList);
+                repository.Setup(r => r.GetReviewsByReviewer(n)).Returns(SampleRatings().Where(f => f.Reviewer == n).ToList);
+            }
+
+            return repository;
+        }
+
         /// <summary>
         /// A list containing 73 ratings.
         /// Reviewers range from 1 to 9.
@@ -99,33 +120,101 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         }
 
         /// <summary>
-        /// Creates a new
+        /// The numbers in the table below were found by manually counting the sample data.
+        /// Require recounting and updating if the existing range of reviewers is altered in any way
         /// </summary>
-        /// <returns></returns>
-        private static Mock<IReviewRepository> CreateNewMoqRepository()
+        /// <param name="reviewer"></param>
+        /// <param name="grade"></param>
+        /// <param name="expectedAmount"></param>
+        [Theory]
+        [InlineData(1, 1, 1)]
+        [InlineData(1, 2, 2)]
+        [InlineData(1, 3, 3)]
+        [InlineData(1, 4, 2)]
+        [InlineData(1, 5, 1)]
+        [InlineData(2, 1, 2)]
+        [InlineData(2, 2, 2)]
+        [InlineData(2, 3, 3)]
+        [InlineData(2, 4, 0)]
+        [InlineData(2, 5, 1)]
+        [InlineData(3, 1, 2)]
+        [InlineData(3, 2, 2)]
+        [InlineData(3, 3, 3)]
+        [InlineData(3, 4, 1)]
+        [InlineData(3, 5, 1)]
+        [InlineData(4, 1, 3)]
+        [InlineData(4, 2, 0)]
+        [InlineData(4, 3, 1)]
+        [InlineData(4, 4, 1)]
+        [InlineData(4, 5, 5)]
+        [InlineData(5, 1, 2)]
+        [InlineData(5, 2, 1)]
+        [InlineData(5, 3, 4)]
+        [InlineData(5, 4, 0)]
+        [InlineData(5, 5, 1)]
+        [InlineData(6, 1, 0)]
+        [InlineData(6, 2, 0)]
+        [InlineData(6, 3, 4)]
+        [InlineData(6, 4, 4)]
+        [InlineData(6, 5, 0)]
+        [InlineData(7, 1, 0)]
+        [InlineData(7, 2, 2)]
+        [InlineData(7, 3, 4)]
+        [InlineData(7, 4, 2)]
+        [InlineData(7, 5, 0)]
+        [InlineData(8, 1, 4)]
+        [InlineData(8, 2, 0)]
+        [InlineData(8, 3, 0)]
+        [InlineData(8, 4, 3)]
+        [InlineData(8, 5, 1)]
+        [InlineData(9, 1, 2)]
+        [InlineData(9, 2, 3)]
+        [InlineData(9, 3, 1)]
+        [InlineData(9, 4, 1)]
+        [InlineData(9, 5, 1)]
+        [InlineData(10, 1, 0)]
+        [InlineData(10, 2, 0)]
+        [InlineData(10, 3, 0)]
+        [InlineData(10, 4, 0)]
+        [InlineData(10, 5, 0)]
+        private void GetAmountOfReviewsWithGradeByReviewer_TestDataFiltering_ExpectsSuccess(
+            int reviewer, int grade, int expectedAmount)
         {
-            var repository = new Mock<IReviewRepository>();
-            repository.Setup(r => r.GetAllReviews())
-                .Returns(SampleRatings);
-            for (var i = 0; i < 9; i++)
-            {
-                var n = i + 1;
-                repository.Setup(r => r.GetReviewsByMovie(n)).Returns(SampleRatings().Where(f => f.Movie == n).ToList);
-                repository.Setup(r => r.GetReviewsByReviewer(n)).Returns(SampleRatings().Where(f => f.Reviewer == n).ToList);
-            }
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
 
-            return repository;
+            var actualAmount = service.GetAmountOfReviewsWithGradeByReviewer(reviewer, grade);
+
+            Assert.Equal(expectedAmount, actualAmount);
         }
 
-        [Fact]
-        public void TestClassSetup()
+        [Theory]
+        [InlineData(-10)]
+        [InlineData(-1)]
+        [InlineData(0)]
+        [InlineData(6)]
+        [InlineData(10)]
+        private void GetAmountOfReviewsWithGradeByReviewer_GradeOutOfRange_ExpectsException(int grade)
         {
-            var repo = CreateNewMoqRepository();
+            var repository = CreateNewMoqRepository();
+            var service = new ReviewService(repository.Object);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => service.GetAmountOfReviewsWithGradeByReviewer(1, grade));
+        }
+
+        /// <summary>
+        /// Basic Test to make sure the Moq object has been sat up correctly.
+        /// This test should be altered to reflect changes in the Moq setup
+        /// </summary>
+        [Fact]
+        private void TestClassSetup()
+        {
+            var repository = CreateNewMoqRepository();
             //var service = new ReviewService(repo.Object);
 
-            var all = repo.Object.GetAllReviews().Count();
-            var movies = repo.Object.GetReviewsByMovie(1).Count();
-            var reviewers = repo.Object.GetReviewsByReviewer(1).Count();
+            var all = repository.Object.GetAllReviews().Count();
+            var movies = repository.Object.GetReviewsByMovie(1).Count();
+            var reviewers = repository.Object.GetReviewsByReviewer(1).Count();
 
             // 73 ratings in total
             Assert.Equal(73, all);

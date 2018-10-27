@@ -1,5 +1,7 @@
 ﻿using Schwartz.Movie.Core.DomainServices;
+using Schwartz.Movie.Core.Entities;
 using Schwartz.Movie.Infrastructure.Static.Data;
+using System.Collections.Generic;
 
 namespace Schwartz.Movie.Infrastructure.Data
 {
@@ -18,6 +20,21 @@ namespace Schwartz.Movie.Infrastructure.Data
             }
 
             Context.SaveChanges();
+        }
+
+        public List<Rating> GetAllReviews()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<Rating> GetReviewsByReviewer(int reviewerId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<Rating> GetReviewsByMovie(int movieId)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+// ReSharper disable PossibleInvalidOperationException
+
 namespace Schwartz.Movie.Infrastructure.Data
 {
     public class JsonFileReader : IFileReader
