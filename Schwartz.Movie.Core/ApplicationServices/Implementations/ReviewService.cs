@@ -1,16 +1,7 @@
-<<<<<<< HEAD
-﻿using System;
 using Schwartz.Movie.Core.DomainServices;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using Schwartz.Movie.Core.Entities;
-=======
-﻿using Schwartz.Movie.Core.DomainServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
->>>>>>> Implemented the review retrieval in accordance with the test class
 
 namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 {
@@ -102,7 +93,7 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
             });
             Console.WriteLine(dictionary);
             var maxValue = dictionary.Values.Max();
-            return new List<int>{dictionary.FirstOrDefault(k => k.Value == maxValue).Key};
+            return new List<int> { dictionary.FirstOrDefault(k => k.Value == maxValue).Key };
         }
 
         public int ReviewsByReviewerCount(int reviewerId)

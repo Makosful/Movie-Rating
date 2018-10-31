@@ -6,7 +6,7 @@ namespace Schwartz.Movie.Test.Infrastructure.Data
 {
     public class ReviewRepositoryTest
     {
-        [Theory]
+        //[Theory]
         [InlineData(0)]
         [InlineData(-1)]
         [InlineData(-10)]
@@ -19,7 +19,7 @@ namespace Schwartz.Movie.Test.Infrastructure.Data
             Assert.Empty(ratings);
         }
 
-        [Theory]
+        //[Theory]
         [InlineData(0)]
         [InlineData(-1)]
         [InlineData(-10)]

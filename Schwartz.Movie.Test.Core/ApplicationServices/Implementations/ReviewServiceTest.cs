@@ -246,7 +246,6 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         }
 
         [Theory]
-<<<<<<< HEAD
         [InlineData(1, 9)]
         [InlineData(2, 8)]
         [InlineData(3, 9)]
@@ -260,7 +259,7 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             var service = new ReviewService(repository.Object);
 
             var countActual = service.ReviewsByReviewerCount(reviewer);
-            
+
             Assert.Equal(countExpected, countActual);
         }
 
@@ -272,7 +271,8 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
 
             var reviewerActual = service.GetTopReviewers()[0];
             Assert.Equal(1, reviewerActual);
-=======
+        }
+
         [InlineData(1, 2.6)]
         [InlineData(2, 2.4)]
         [InlineData(3, 2.9)]
@@ -304,7 +304,6 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             var rating = service.GetAverageMovieRating(id);
 
             Assert.Equal(0, rating);
->>>>>>> Implemented GetAverageMovieRating according to the test case. Not implemented test cases still fail.
         }
     }
 }
