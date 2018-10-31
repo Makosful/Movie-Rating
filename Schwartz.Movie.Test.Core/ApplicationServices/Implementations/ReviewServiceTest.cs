@@ -273,6 +273,7 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             Assert.Equal(1, reviewerActual);
         }
 
+        [Theory]
         [InlineData(1, 2.6)]
         [InlineData(2, 2.4)]
         [InlineData(3, 2.9)]
