@@ -306,5 +306,17 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
 
             Assert.Equal(0, rating);
         }
+
+        [Fact]
+        private void GetTopNMovies()
+        {
+            var repository = CreateNewMoqRepository();
+            var service = new ReviewService(repository.Object);
+
+            var topMovies = service.GetTopMovies(4);
+            var actualTop = new List<int> {9, 4, 3, 8};
+
+            topMovies.ForEach(m => Assert.Contains(m, actualTop));
+        }
     }
 }

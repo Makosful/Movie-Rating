@@ -2,6 +2,7 @@ using Schwartz.Movie.Core.DomainServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Schwartz.Movie.Core.Entities;
 
 namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 {
@@ -74,7 +75,23 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public List<int> GetTopMovies(int count)
         {
-            throw new System.NotImplementedException();
+            var reviews = ReviewRepository.GetAllReviews();
+            var movies = new Dictionary<int, double>();
+            reviews.ForEach(m =>
+            {
+                if (!movies.ContainsKey(m.Movie))
+                {
+                    movies.Add(m.Movie, GetAverageMovieRating(m.Movie));
+                }
+            });
+            var topMovies = new List<int>();
+            movies.OrderByDescending(m => m.Value).Take(count).
+                                                Select(m =>
+                                                {
+                                                    topMovies.Add(m.Key);
+                                                    return m;
+                                                });
+            return topMovies;
         }
 
         public List<int> GetTopReviewers(int count = 1)
