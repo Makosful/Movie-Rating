@@ -243,5 +243,15 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             
             Assert.Equal(countExpected, countActual);
         }
+
+        [Fact]
+        private void GetTopReviewersTest()
+        {
+            var repository = CreateNewMoqRepository();
+            var service = new ReviewService(repository.Object);
+
+            var reviewerActual = service.GetTopReviewers()[0];
+            Assert.Equal(1, reviewerActual);
+        }
     }
 }

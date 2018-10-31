@@ -64,7 +64,21 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public List<int> GetTopReviewers(int count = 1)
         {
-            throw new System.NotImplementedException();
+            var dictionary = new Dictionary<int, int>();
+            ReviewRepository.GetAllReviews().ForEach(r =>
+            {
+                if (!dictionary.ContainsKey(r.Reviewer))
+                {
+                    dictionary.Add(r.Reviewer, 1);
+                }
+                else
+                {
+                    dictionary[r.Reviewer]++;
+                }
+            });
+            Console.WriteLine(dictionary);
+            var maxValue = dictionary.Values.Max();
+            return new List<int>{dictionary.FirstOrDefault(k => k.Value == maxValue).Key};
         }
 
         public int ReviewsByReviewerCount(int reviewerId)
