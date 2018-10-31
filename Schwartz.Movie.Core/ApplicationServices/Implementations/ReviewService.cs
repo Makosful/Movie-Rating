@@ -1,9 +1,7 @@
-﻿using System;
 using Schwartz.Movie.Core.DomainServices;
+using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using Schwartz.Movie.Core.Entities;
 
 namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 {
@@ -19,12 +17,29 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public int GetAmountOfReviewsWithGradeByReviewer(int reviewerId, int grade)
         {
-            throw new System.NotImplementedException();
+            if (grade < 1 || grade > 5)
+                throw new ArgumentOutOfRangeException(nameof(grade), "A review can only give a move a rating between 1 and 5");
+
+            var ratings = ReviewRepository.GetReviewsByReviewer(reviewerId);
+            var enumerable = ratings.Where(r => r.Grade == grade);
+
+            return enumerable.Count();
         }
 
         public double GetAverageMovieRating(int movieId)
         {
-            throw new System.NotImplementedException();
+            var ratings = ReviewRepository.GetReviewsByMovie(movieId);
+
+            if (!ratings.Any()) return 0d;
+
+            double sum = 0;
+
+            foreach (var rating in ratings)
+                sum += rating.Grade;
+
+            var avg = sum / ratings.Count;
+
+            return Math.Round(avg, 1);
         }
 
         public double GetAverageRatingByReviewer(int reviewerId)
@@ -78,7 +93,7 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
             });
             Console.WriteLine(dictionary);
             var maxValue = dictionary.Values.Max();
-            return new List<int>{dictionary.FirstOrDefault(k => k.Value == maxValue).Key};
+            return new List<int> { dictionary.FirstOrDefault(k => k.Value == maxValue).Key };
         }
 
         public int ReviewsByReviewerCount(int reviewerId)
