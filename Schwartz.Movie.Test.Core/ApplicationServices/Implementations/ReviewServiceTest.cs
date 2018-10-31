@@ -225,5 +225,23 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             // 9 reviews by reviewer 1
             Assert.Equal(9, reviewers);
         }
+
+        [Theory]
+        [InlineData(1, 9)]
+        [InlineData(2, 8)]
+        [InlineData(3, 9)]
+        [InlineData(4, 10)]
+        [InlineData(5, 8)]
+        [InlineData(6, 8)]
+        [InlineData(7, 8)]
+        private void GetReviewCountByReviewer(int reviewer, int countExpected)
+        {
+            var repository = CreateNewMoqRepository();
+            var service = new ReviewService(repository.Object);
+
+            var countActual = service.ReviewsByReviewerCount(reviewer);
+            
+            Assert.Equal(countExpected, countActual);
+        }
     }
 }

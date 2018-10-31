@@ -1,5 +1,9 @@
-﻿using Schwartz.Movie.Core.DomainServices;
+﻿using System;
+using Schwartz.Movie.Core.DomainServices;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using Schwartz.Movie.Core.Entities;
 
 namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 {
@@ -65,7 +69,8 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public int ReviewsByReviewerCount(int reviewerId)
         {
-            throw new System.NotImplementedException();
+            var reviews = ReviewRepository.GetReviewsByReviewer(reviewerId);
+            return reviews.Count();
         }
     }
 }
