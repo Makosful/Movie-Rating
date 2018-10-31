@@ -229,8 +229,8 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         [Theory]
         [InlineData(1, 9)]
         [InlineData(2, 8)]
-        [InlineData(3, 9)]
-        [InlineData(4, 10)]
+        [InlineData(3, 8)]
+        [InlineData(4, 8)]
         [InlineData(5, 8)]
         [InlineData(6, 8)]
         [InlineData(7, 8)]
@@ -253,5 +253,7 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             var reviewerActual = service.GetTopReviewers()[0];
             Assert.Equal(1, reviewerActual);
         }
+        
+        
     }
 }
