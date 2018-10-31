@@ -31,6 +31,9 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             repository.Setup(
                     r => r.GetReviewsByReviewer(It.IsNotIn(1, 2, 3, 4, 5, 6, 7, 8, 9)))
                 .Returns(new List<Rating>());
+            repository.Setup(
+                    r => r.GetReviewsByMovie(It.IsNotIn(1, 2, 3, 4, 5, 6, 7, 8, 9)))
+                .Returns(new List<Rating>());
 
             return repository;
         }
@@ -243,6 +246,7 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         }
 
         [Theory]
+<<<<<<< HEAD
         [InlineData(1, 9)]
         [InlineData(2, 8)]
         [InlineData(3, 9)]
@@ -268,6 +272,39 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
 
             var reviewerActual = service.GetTopReviewers()[0];
             Assert.Equal(1, reviewerActual);
+=======
+        [InlineData(1, 2.6)]
+        [InlineData(2, 2.4)]
+        [InlineData(3, 2.9)]
+        [InlineData(4, 3.4)]
+        [InlineData(5, 3.8)]
+        [InlineData(6, 1.8)]
+        [InlineData(7, 2.5)]
+        [InlineData(8, 2.9)]
+        [InlineData(9, 3.4)]
+        private void GetAverageMovieRating_ValidData_ExpectsSuccess(int movie, double rating)
+        {
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
+
+            var movieRating = service.GetAverageMovieRating(movie);
+
+            Assert.Equal(rating, movieRating);
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        [InlineData(10)]
+        private void GetAverageMovieRating_InvalidMovieId_ExpectsZero(int id)
+        {
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
+
+            var rating = service.GetAverageMovieRating(id);
+
+            Assert.Equal(0, rating);
+>>>>>>> Implemented GetAverageMovieRating according to the test case. Not implemented test cases still fail.
         }
     }
 }

@@ -37,7 +37,18 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public double GetAverageMovieRating(int movieId)
         {
-            throw new System.NotImplementedException();
+            var ratings = ReviewRepository.GetReviewsByMovie(movieId);
+
+            if (!ratings.Any()) return 0d;
+
+            double sum = 0;
+
+            foreach (var rating in ratings)
+                sum += rating.Grade;
+
+            var avg = sum / ratings.Count;
+
+            return Math.Round(avg, 1);
         }
 
         public double GetAverageRatingByReviewer(int reviewerId)
