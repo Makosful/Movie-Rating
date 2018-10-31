@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 ﻿using System;
 using Schwartz.Movie.Core.DomainServices;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using Schwartz.Movie.Core.Entities;
+=======
+﻿using Schwartz.Movie.Core.DomainServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+>>>>>>> Implemented the review retrieval in accordance with the test class
 
 namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 {
@@ -19,7 +26,13 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public int GetAmountOfReviewsWithGradeByReviewer(int reviewerId, int grade)
         {
-            throw new System.NotImplementedException();
+            if (grade < 1 || grade > 5)
+                throw new ArgumentOutOfRangeException(nameof(grade), "A review can only give a move a rating between 1 and 5");
+
+            var ratings = ReviewRepository.GetReviewsByReviewer(reviewerId);
+            var enumerable = ratings.Where(r => r.Grade == grade);
+
+            return enumerable.Count();
         }
 
         public double GetAverageMovieRating(int movieId)

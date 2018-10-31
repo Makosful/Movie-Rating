@@ -8,7 +8,7 @@ namespace Schwartz.Movie.Core.Entities
 
         public int Reviewer { get; set; }
         public int Movie { get; set; }
-        public float Grade { get; set; }
+        public int Grade { get; set; }
         public DateTime Date { get; set; }
 
         public override string ToString()

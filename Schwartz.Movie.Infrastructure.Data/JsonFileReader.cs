@@ -64,7 +64,7 @@ namespace Schwartz.Movie.Infrastructure.Data
                         break;
 
                     case "Grade":
-                        rating.Grade = (float)reader.ReadAsDecimal();
+                        rating.Grade = (int)reader.ReadAsInt32();
                         break;
 
                     case "Date":

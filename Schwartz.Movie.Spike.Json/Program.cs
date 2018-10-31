@@ -70,7 +70,7 @@ namespace Schwartz.Movie.Spike.Json
                         break;
 
                     case "Grade":
-                        rating.Grade = (float)reader.ReadAsDecimal();
+                        rating.Grade = (int)reader.ReadAsInt32();
                         break;
 
                     case "Date":

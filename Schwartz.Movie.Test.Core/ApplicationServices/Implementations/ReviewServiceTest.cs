@@ -28,6 +28,10 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
                 repository.Setup(r => r.GetReviewsByReviewer(n)).Returns(SampleRatings().Where(f => f.Reviewer == n).ToList);
             }
 
+            repository.Setup(
+                    r => r.GetReviewsByReviewer(It.IsNotIn(1, 2, 3, 4, 5, 6, 7, 8, 9)))
+                .Returns(new List<Rating>());
+
             return repository;
         }
 
@@ -139,14 +143,14 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         [InlineData(2, 5, 1)]
         [InlineData(3, 1, 2)]
         [InlineData(3, 2, 2)]
-        [InlineData(3, 3, 3)]
+        [InlineData(3, 3, 2)]
         [InlineData(3, 4, 1)]
         [InlineData(3, 5, 1)]
         [InlineData(4, 1, 3)]
         [InlineData(4, 2, 0)]
         [InlineData(4, 3, 1)]
         [InlineData(4, 4, 1)]
-        [InlineData(4, 5, 5)]
+        [InlineData(4, 5, 3)]
         [InlineData(5, 1, 2)]
         [InlineData(5, 2, 1)]
         [InlineData(5, 3, 4)]
@@ -172,11 +176,6 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         [InlineData(9, 3, 1)]
         [InlineData(9, 4, 1)]
         [InlineData(9, 5, 1)]
-        [InlineData(10, 1, 0)]
-        [InlineData(10, 2, 0)]
-        [InlineData(10, 3, 0)]
-        [InlineData(10, 4, 0)]
-        [InlineData(10, 5, 0)]
         private void GetAmountOfReviewsWithGradeByReviewer_TestDataFiltering_ExpectsSuccess(
             int reviewer, int grade, int expectedAmount)
         {
@@ -186,6 +185,23 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             var actualAmount = service.GetAmountOfReviewsWithGradeByReviewer(reviewer, grade);
 
             Assert.Equal(expectedAmount, actualAmount);
+        }
+
+        [Theory]
+        [InlineData(10, 1)]
+        [InlineData(11, 2)]
+        [InlineData(0, 3)]
+        [InlineData(-5, 4)]
+        [InlineData(int.MaxValue, 5)]
+        private void GetAmountOfReviewsWithGradeByReviewer_ReviewerIdNotFound_ExpectsZero(
+            int reviewer, int grade)
+        {
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
+
+            var actualAmount = service.GetAmountOfReviewsWithGradeByReviewer(reviewer, grade);
+
+            Assert.Equal(0, actualAmount);
         }
 
         [Theory]
