@@ -65,7 +65,7 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public int GetReviewerCountByMovie(int movieId)
         {
-            throw new System.NotImplementedException();
+            return ReviewRepository.GetReviewsByMovie(movieId).Count;
         }
 
         public List<int> GetTopFiveMovies()

@@ -329,6 +329,22 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             var actualTop = new List<int> {9, 4, 3, 8, 1};           
                                                           
             topMovies.ForEach(m => Assert.Contains(m, actualTop));
-        }                                                         
+        }
+
+        [Theory]
+        [InlineData(1, 8)]
+        [InlineData(2, 9)]
+        [InlineData(3, 8)]
+        [InlineData(4, 8)]
+        [InlineData(5, 8)]
+        private void TestReviewerCountByMovie(int movieId, int expectedCount)
+        {
+            var repository = CreateNewMoqRepository();            
+            var service = new ReviewService(repository.Object);
+
+            var actualCount = service.GetReviewerCountByMovie(movieId);
+            
+            Assert.Equal(expectedCount, actualCount);
+        }
     }
 }
