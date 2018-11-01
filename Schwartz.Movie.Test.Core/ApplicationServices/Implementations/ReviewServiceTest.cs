@@ -356,7 +356,7 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         private void TestReviewerCountByMovie(int movieId, int expectedCount)
         {
             var repository = CreateNewMoqRepository();
-            var service = new ReviewService(repository.Object);
+            IReviewService service = new ReviewService(repository.Object);
 
             var actualCount = service.GetReviewerCountByMovie(movieId);
 
@@ -377,6 +377,18 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
 
             Assert.NotEmpty(reviewers);
             Assert.Equal(expected, reviewers.Count);
+        }
+
+        [Fact]
+        private void GetMovieByReviewerTest()
+        {
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
+
+            var expectedContains = new List<int>{1,2,3,4,5,6,7,8,9};
+            var actualList = service.GetMoviesByReviewer(1);
+            
+            expectedContains.ForEach(m => Assert.Contains(m, actualList));
         }
     }
 }

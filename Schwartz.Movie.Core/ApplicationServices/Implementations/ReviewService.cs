@@ -71,7 +71,15 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public List<int> GetMoviesByReviewer(int reviewerId)
         {
-            throw new System.NotImplementedException();
+            var movies = new List<int>();
+            ReviewRepository.GetAllReviews().Select(r =>
+            {
+                if (r.Reviewer == reviewerId && !movies.Contains(r.Movie))
+                    movies.Add(r.Movie);
+                
+                return r;
+            });
+            return movies;
         }
 
         public int GetReviewerCountByMovie(int movieId)
