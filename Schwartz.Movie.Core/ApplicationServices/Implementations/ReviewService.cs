@@ -2,7 +2,6 @@ using Schwartz.Movie.Core.DomainServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Schwartz.Movie.Core.Entities;
 
 namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 {
@@ -50,7 +49,19 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public List<int> GetListOfReviewersByMovie(int movieId)
         {
-            throw new System.NotImplementedException();
+            var reviewers = new List<int>();
+            var ratings = ReviewRepository.GetReviewsByMovie(movieId);
+
+            // Assumes a reviewer can only leave one review on a movie
+            foreach (var rating in ratings)
+            {
+                if (!reviewers.Contains(rating.Reviewer))
+                {
+                    reviewers.Add(rating.Reviewer);
+                }
+            }
+
+            return reviewers;
         }
 
         public int GetMovieGradeCount(int movieId, int grade)

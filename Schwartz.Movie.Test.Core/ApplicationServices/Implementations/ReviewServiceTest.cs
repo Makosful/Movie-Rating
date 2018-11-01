@@ -330,5 +330,42 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
 
             topMovies.ForEach(m => Assert.Contains(m, actualTop));
         }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-10)]
+        [InlineData(15)]
+        private void GetListOfReviewersByMovie_InvalidData_ExpectsEmptyList(int id)
+        {
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
+
+            var reviewers = service.GetListOfReviewersByMovie(id);
+
+            Assert.NotNull(reviewers);
+            Assert.Empty(reviewers);
+        }
+
+        [Theory]
+        [InlineData(1, 8)]
+        [InlineData(2, 9)]
+        [InlineData(3, 8)]
+        [InlineData(4, 8)]
+        [InlineData(5, 8)]
+        [InlineData(6, 8)]
+        [InlineData(7, 8)]
+        [InlineData(8, 8)]
+        [InlineData(9, 8)]
+        private void GetListOfReviewersByMovie_ValidData_ExpectsSuccess(int id, int expected)
+        {
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
+
+            var reviewers = service.GetListOfReviewersByMovie(id);
+
+            Assert.NotEmpty(reviewers);
+            Assert.Equal(expected, reviewers.Count);
+        }
     }
 }
