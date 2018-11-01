@@ -216,7 +216,7 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         private void GetAmountOfReviewsWithGradeByReviewer_GradeOutOfRange_ExpectsException(int grade)
         {
             var repository = CreateNewMoqRepository();
-            var service = new ReviewService(repository.Object);
+            IReviewService service = new ReviewService(repository.Object);
 
             Assert.Throws<ArgumentOutOfRangeException>(() => service.GetAmountOfReviewsWithGradeByReviewer(1, grade));
         }
@@ -229,7 +229,7 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         private void TestClassSetup()
         {
             var repository = CreateNewMoqRepository();
-            //var service = new ReviewService(repo.Object);
+            //IReviewService service = new ReviewService(repo.Object);
 
             var all = repository.Object.GetAllReviews().Count();
             var movies = repository.Object.GetReviewsByMovie(1).Count();
@@ -256,7 +256,7 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         private void GetReviewCountByReviewer(int reviewer, int countExpected)
         {
             var repository = CreateNewMoqRepository();
-            var service = new ReviewService(repository.Object);
+            IReviewService service = new ReviewService(repository.Object);
 
             var countActual = service.ReviewsByReviewerCount(reviewer);
 
@@ -267,7 +267,7 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         private void GetTopReviewersTest()
         {
             var repository = CreateNewMoqRepository();
-            var service = new ReviewService(repository.Object);
+            IReviewService service = new ReviewService(repository.Object);
 
             var reviewerActual = service.GetTopReviewers()[0];
             Assert.Equal(1, reviewerActual);
@@ -311,24 +311,24 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
         private void GetTopNMovies()
         {
             var repository = CreateNewMoqRepository();
-            var service = new ReviewService(repository.Object);
+            IReviewService service = new ReviewService(repository.Object);
 
             var topMovies = service.GetTopMovies(4);
-            var actualTop = new List<int> {9, 4, 3, 8};
+            var actualTop = new List<int> { 9, 4, 3, 8 };
 
             topMovies.ForEach(m => Assert.Contains(m, actualTop));
         }
-        
-        [Fact]                                                    
-        private void GetTop5Movies()                              
-        {                                                         
-            var repository = CreateNewMoqRepository();            
-            var service = new ReviewService(repository.Object);
 
-            var topMovies = service.GetTopFiveMovies();              
-            var actualTop = new List<int> {9, 4, 3, 8, 1};           
-                                                          
+        [Fact]
+        private void GetTop5Movies()
+        {
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
+
+            var topMovies = service.GetTopFiveMovies();
+            var actualTop = new List<int> { 9, 4, 3, 8, 1 };
+
             topMovies.ForEach(m => Assert.Contains(m, actualTop));
-        }                                                         
+        }
     }
 }
