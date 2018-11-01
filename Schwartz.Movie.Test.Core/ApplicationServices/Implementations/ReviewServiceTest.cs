@@ -390,5 +390,22 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             
             expectedContains.ForEach(m => Assert.Contains(m, actualList));
         }
+
+        [Theory]
+        [InlineData(1, 3, 4)]
+        [InlineData(2, 1, 4)]
+        [InlineData(3, 2, 2)]
+        [InlineData(4, 5, 3)]
+        [InlineData(5, 4, 2)]
+        [InlineData(6, 2, 4)]
+        private void GetMovieGradeCountTest(int movieId, int grade, int expectedCount)
+        {
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
+
+            var actualCount = service.GetMovieGradeCount(movieId, grade);
+            
+            Assert.Equal(expectedCount, actualCount);
+        }
     }
 }

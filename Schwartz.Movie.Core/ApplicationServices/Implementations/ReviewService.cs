@@ -66,7 +66,8 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public int GetMovieGradeCount(int movieId, int grade)
         {
-            throw new System.NotImplementedException();
+            var reviews = ReviewRepository.GetReviewsByMovie(movieId);
+            return reviews.Count(r => r.Grade.Equals(grade));
         }
 
         public List<int> GetMoviesByReviewer(int reviewerId)
