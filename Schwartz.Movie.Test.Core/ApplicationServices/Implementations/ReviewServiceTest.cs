@@ -385,10 +385,25 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             var repository = CreateNewMoqRepository();
             IReviewService service = new ReviewService(repository.Object);
 
-            var expectedContains = new List<int>{1,2,3,4,5,6,7,8,9};
+            var expectedContains = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9 };
             var actualList = service.GetMoviesByReviewer(1);
-            
+
             expectedContains.ForEach(m => Assert.Contains(m, actualList));
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-10)]
+        [InlineData(10)]
+        private void GetAverageRatingByReviewer_InvalidData_ExpectsNegativeOne(int id)
+        {
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
+
+            var rating = service.GetAverageRatingByReviewer(id);
+
+            Assert.Equal(-1, rating);
         }
 
         [Theory]
@@ -406,6 +421,26 @@ namespace Schwartz.Movie.Test.Core.ApplicationServices.Implementations
             var actualCount = service.GetMovieGradeCount(movieId, grade);
             
             Assert.Equal(expectedCount, actualCount);
+        }
+
+        [Theory]
+        [InlineData(1, 3.0)]
+        [InlineData(2, 2.5)]
+        [InlineData(3, 2.6)]
+        [InlineData(4, 3.1)]
+        [InlineData(5, 2.6)]
+        [InlineData(6, 3.5)]
+        [InlineData(7, 3.0)]
+        [InlineData(8, 2.6)]
+        [InlineData(9, 2.5)]
+        private void GetAverageRatingByReviewer_ValidData_ExpectsSuccess(int id, double expected)
+        {
+            var repository = CreateNewMoqRepository();
+            IReviewService service = new ReviewService(repository.Object);
+
+            var rating = service.GetAverageRatingByReviewer(id);
+
+            Assert.Equal(expected, rating);
         }
     }
 }

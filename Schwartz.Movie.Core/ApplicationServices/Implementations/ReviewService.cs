@@ -44,7 +44,17 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public double GetAverageRatingByReviewer(int reviewerId)
         {
-            throw new System.NotImplementedException();
+            var ratings = ReviewRepository.GetReviewsByReviewer(reviewerId);
+
+            if (!ratings.Any()) return -1;
+
+            double sum = 0;
+            foreach (var rating in ratings)
+                sum += rating.Grade;
+
+            double avg = sum / ratings.Count;
+
+            return Math.Round(avg, 1);
         }
 
         public List<int> GetListOfReviewersByMovie(int movieId)
@@ -72,15 +82,10 @@ namespace Schwartz.Movie.Core.ApplicationServices.Implementations
 
         public List<int> GetMoviesByReviewer(int reviewerId)
         {
-            var movies = new List<int>();
-            ReviewRepository.GetAllReviews().Select(r =>
-            {
-                if (r.Reviewer == reviewerId && !movies.Contains(r.Movie))
-                    movies.Add(r.Movie);
-                
-                return r;
-            });
-            return movies;
+            var movies = ReviewRepository.GetReviewsByReviewer(reviewerId);
+            
+            
+            return new List<int>(movies.Select(m => m.Movie));
         }
 
         public int GetReviewerCountByMovie(int movieId)
